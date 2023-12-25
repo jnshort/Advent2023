@@ -23,12 +23,17 @@ func main() {
 	}
 
 	var sum = 0
+	var power_sum = 0
 
 	var text = string(bytes)
 
 	var lines = strings.Split(text, "\n")
 
 	for _, v := range lines {
+		var power = 0
+		var least_red = 0
+		var least_blue = 0
+		var least_green = 0
 		var splits = strings.Split(v, ": ")
 		game := splits[0]
 		rounds_str := splits[1]
@@ -40,7 +45,6 @@ func main() {
 			fmt.Println(err)
 			return
 		}
-		fmt.Println(game_number)
 
 		// Create array of rounds in game
 		rounds_array := strings.Split(rounds_str, "; ")
@@ -66,35 +70,40 @@ func main() {
 				case "red":
 					if amount > 12 {
 						valid_game = false
-						break
+					}
+					if amount > least_red {
+						least_red = amount
 					}
 					rounds[i][0] = amount
 				case "blue":
 					if amount > 14 {
 						valid_game = false
-						break
+					}
+					if amount > least_blue {
+						least_blue = amount
 					}
 					rounds[i][1] = amount
 				case "green":
 					if amount > 13 {
 						valid_game = false
-						break
+					}
+					if amount > least_green {
+						least_green = amount
 					}
 					rounds[i][2] = amount
 				default:
 					fmt.Println("Invalid color")
 					return
 				}
-				fmt.Println(rounds[i])
 			}
-
 		}
+		power = least_red * least_blue * least_green
+		power_sum += power
 		if valid_game == true {
 			sum += game_number
 		}
-		fmt.Println(valid_game)
-
 		valid_game = true
 	}
-	fmt.Println(sum)
+	fmt.Printf("Sum of Valid Game Numbers: %d\n", sum)
+	fmt.Printf("Power Sum of All Games: %d\n", power_sum)
 }
