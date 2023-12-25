@@ -52,11 +52,11 @@ func main() {
 			}
 		}
 		var j int = int(len(line) - 1)
-		for line_last == "" {
+		for j>= 0 && line_last == "" {
 			if line[j] >= '0' && line[j] <= '9' {
 				line_last = string(line[j])
 			}else{
-			j--
+				j--
 			}
 		}
 		var line_number_str = line_first + line_last
