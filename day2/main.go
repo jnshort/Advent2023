@@ -46,7 +46,7 @@ func main() {
 		rounds_array := strings.Split(rounds_str, "; ")
 
 		// Create arrays holding number of balls of each color pulled that round (red, blue, green)
-		rounds := make([][]int, 3)
+		rounds := make([][]int, len(rounds_array))
 
 		var valid_game = true
 
@@ -66,22 +66,26 @@ func main() {
 				case "red":
 					if amount > 12 {
 						valid_game = false
+						break
 					}
 					rounds[i][0] = amount
 				case "blue":
 					if amount > 14 {
 						valid_game = false
+						break
 					}
 					rounds[i][1] = amount
 				case "green":
 					if amount > 13 {
 						valid_game = false
+						break
 					}
 					rounds[i][2] = amount
 				default:
 					fmt.Println("Invalid color")
 					return
 				}
+				fmt.Println(rounds[i])
 			}
 
 		}
@@ -89,6 +93,8 @@ func main() {
 			sum += game_number
 		}
 		fmt.Println(valid_game)
+
+		valid_game = true
 	}
 	fmt.Println(sum)
 }
