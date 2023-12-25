@@ -23,15 +23,15 @@ func main() {
 	}
 
 	var text = string(bytes)
-	text = strings.Replace(text, "one", "1", -1)
 	text = strings.Replace(text, "two", "2", -1)
 	text = strings.Replace(text, "three", "3", -1)
+	text = strings.Replace(text, "eight", "8", -1)
+	text = strings.Replace(text, "nine", "9", -1)
+	text = strings.Replace(text, "one", "1", -1)
 	text = strings.Replace(text, "four", "4", -1)
 	text = strings.Replace(text, "five", "5", -1)
 	text = strings.Replace(text, "six", "6", -1)
 	text = strings.Replace(text, "seven", "7", -1)
-	text = strings.Replace(text, "eight", "8", -1)
-	text = strings.Replace(text, "nine", "9", -1)
 
 	// split text by new line
 	var lines = strings.Split(text, "\n")
