@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	file, err := os.Open("go_day_1/input.txt")
+	file, err := os.Open("day1/input.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -32,32 +32,36 @@ func main() {
 	// for each line find first and last number as a single digit or string of characters
 	var validSubStrings = [18]string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 	for _, v1 := range lines {
-		var index_array = [18]int{}
-		for i := range index_array {
-			index_array[i] = -1
+		var firstIndexArray = [18]int{}
+		var lastIndexArray = [18]int{}
+		for i := range firstIndexArray {
+			firstIndexArray[i] = -1
+			lastIndexArray[i] = -1
 		}
 
 		for i, v2 := range validSubStrings {
 			var index1 = strings.Index(v1, v2)
 			if index1 != -1 {
-				index_array[i] = index1
+				firstIndexArray[i] = index1
 			}
 			var index2 = strings.LastIndex(v1, v2)
-			if index2 != index1 && index2 != -1 {
-				index_array[i] = index2
+			if index2 != -1 {
+				lastIndexArray[i] = index2
 			}
 		}
 		var first_ind = 1000000
 		var first_val = 1000000
 		var last_ind = -1
 		var last_val = -1
-		for i, v := range index_array {
+		for i, v := range firstIndexArray {
 			if v != -1 {
 				if v < first_val {
 					first_ind = i
 					first_val = v
 				}
 			}
+		}
+		for i, v := range lastIndexArray {
 			if v != -1 {
 				if v > last_val {
 					last_ind = i
@@ -78,8 +82,9 @@ func main() {
 			fmt.Println(err)
 			return
 		}
+		fmt.Printf("%d \n", fullNumber)
 		sum += fullNumber
 	}
-	fmt.Println(sum)
 
+	fmt.Println(sum)
 }
