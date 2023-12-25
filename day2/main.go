@@ -22,6 +22,8 @@ func main() {
 		return
 	}
 
+	var sum = 0
+
 	var text = string(bytes)
 
 	var lines = strings.Split(text, "\n")
@@ -46,6 +48,8 @@ func main() {
 		// Create arrays holding number of balls of each color pulled that round (red, blue, green)
 		rounds := make([][]int, 3)
 
+		var valid_game = true
+
 		for i := range rounds {
 			rounds[i] = make([]int, 3)
 			round_raw := strings.Split(rounds_array[i], ", ")
@@ -60,18 +64,31 @@ func main() {
 				}
 				switch colors[1] {
 				case "red":
+					if amount > 12 {
+						valid_game = false
+					}
 					rounds[i][0] = amount
 				case "blue":
+					if amount > 14 {
+						valid_game = false
+					}
 					rounds[i][1] = amount
 				case "green":
+					if amount > 13 {
+						valid_game = false
+					}
 					rounds[i][2] = amount
 				default:
 					fmt.Println("Invalid color")
 					return
 				}
 			}
-			fmt.Println(rounds[i])
-		}
 
+		}
+		if valid_game == true {
+			sum += game_number
+		}
+		fmt.Println(valid_game)
 	}
+	fmt.Println(sum)
 }
