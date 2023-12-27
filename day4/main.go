@@ -52,34 +52,18 @@ func (c Card) Matches() int {
 }
 
 func process_card_list(cards []Card) int {
-	var card_queue []Card
-	processed := make([]bool, len(cards))
-	for _, card := range cards {
-		card_queue = append(card_queue, card)
-	}
-	card_count := 0
-	for len(card_queue) > 0 {
-		card := card_queue[0]
-		card_queue = card_queue[1:]
-		var matches int = card.Matches()
-		if matches == 0 {
-			continue
-		}
-		if processed[card.card_id] {
-			continue
-		}
-		processed[card.card_id] = true
-		for i := 1; i < matches+1; i++ {
-			next_card_id := card.card_id + i
-			if next_card_id < len(cards) {
-				cards[next_card_id].copies += card.copies
-				cards = append(cards, cards[next_card_id])
+	var scratchcards = 0
+	for i, card := range cards {
+		winning_cards := card.Matches()
+		for j := i+1; j < i+winning_cards+1; j++ {
+			if j > len(cards) {
+				break
 			}
+			cards[j].copies += card.copies
 		}
-		card_count += card.copies
-		fmt.Println(len(card_queue))
+		scratchcards += card.copies
 	}
-	return card_count
+	return scratchcards
 }
 
 func main() {
@@ -108,6 +92,10 @@ func main() {
 		winning_numbers, chosen_numbers := normalize_string_lists(raw_lists[0]), normalize_string_lists(raw_lists[1])
 		var card Card
 		card, err = create_card(card_id, winning_numbers, chosen_numbers)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 		pointsSum += card.Points()
 		cards = append(cards, card)
 		card_id++
